@@ -38,6 +38,7 @@ export type TooltipProps = {
   skipAndroidStatusBar?: boolean;
   ModalComponent?: typeof React.Component;
   closeOnlyOnBackdropPress?: boolean;
+  backDropPressDisabled?: boolean;
 } & typeof defaultProps;
 
 const defaultProps = {
@@ -56,6 +57,7 @@ const defaultProps = {
   skipAndroidStatusBar: false,
   ModalComponent: Modal,
   closeOnlyOnBackdropPress: false,
+  backDropPressDisabled: false,
 };
 
 type TooltipState = {
@@ -308,12 +310,13 @@ class Tooltip extends React.Component<
   };
 
   renderTogglingModalContent = () => {
-    const { withOverlay, overlayColor } = this.props;
+    const { withOverlay, overlayColor, backDropPressDisabled } = this.props;
     return (
       <TouchableOpacity
         style={this.containerStyle(withOverlay, overlayColor)}
         onPress={this.toggleTooltip}
         activeOpacity={1}
+        disabled={backDropPressDisabled}
       >
         {this.renderContent(true)}
       </TouchableOpacity>
